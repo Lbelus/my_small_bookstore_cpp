@@ -14,7 +14,7 @@ int find_ch(char* str, char ch)
 
 char** my_strtok(char* str, int start_pos, char ch)
 {
-    char** tokens = malloc(sizeof(char*) * MAX_INPUT_TOKENS);
+    char** tokens = (char**)malloc(sizeof(char*) * MAX_INPUT_TOKENS);
     char* start = str;
     char* end;
     int index = start_pos;
