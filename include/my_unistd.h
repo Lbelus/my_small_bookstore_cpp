@@ -30,7 +30,6 @@ typedef struct s_my_getopt
 #define __STAR_CHAR__           '*'
 #define __SPACE_CHAR__          ' '
 #define __DASH_CHAR__           '-'
-//my_unistd.h
 
 void    count_str_array(int argc, char** argv, my_getopt_t* getopt_ptr);
 void    dynamic_malloc(int argc, char** argv, my_getopt_t *getopt_ptr);

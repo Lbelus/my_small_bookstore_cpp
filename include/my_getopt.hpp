@@ -6,8 +6,6 @@
 #include <string>
 #include <my_libasm.h>
 
-
-
 #define VALID_ARG "-h"
 
 
@@ -19,7 +17,7 @@ class MyGetOpt
     public:
     MyGetOpt()
     {
-        GetOptPtr = (my_getopt_t*) malloc(sizeof(my_getopt_t));
+        GetOptPtr = (my_getopt_t*)malloc(sizeof(my_getopt_t));
         init_getopt(GetOptPtr, VALID_ARG);
     }
 
@@ -88,7 +86,7 @@ class MyGetOpt
     {
         std::vector<std::string> vec;
         size_t index = 1;
-        vec.emplace_back(std::string("TH_RAND_CLI"));
+        vec.emplace_back(std::string("TH_RAND_CLI")); // not great, need to circle back to it once critical part is done.
         while (tokens[index] != NULL)
         {
             vec.emplace_back(std::string(tokens[index]));

@@ -1,12 +1,13 @@
 #ifndef __PARSER_HEADERFILE_
 #define __PARSER_HEADERFILE_
 
-// #include <main_CLI_header.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <my_libasm.h>
 
 #define __SPACE_CHAR__   ' '
 #define MAX_INPUT_TOKENS 250
-#define DELIMITER        '\n'
-#define BLOCK_SIZE       512
+// #define DELIMITER        '\n'
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,10 @@
 #ifndef __N_STD_HEADER_
 #define __N_STD_HEADER_
 
-// #include <main_CLI_header.h>
+#include <stddef.h>
+#include <stdbool.h>
+
+#define __SPACE_CHAR__          ' '
 
 #ifdef __cplusplus
 extern "C" {
