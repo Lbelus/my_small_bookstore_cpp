@@ -1,8 +1,14 @@
-#include <iostream>
-#include <memory> 
-#include <vector>
+#ifndef _MY_BOOK_FACTORY_
+#define _MY_BOOK_FACTORY_
+
+
+// #include <iostream>
+// #include <vector>
+// #include <string>
+
+#include <memory>
 #include <set>
-#include <string>
+
 
 // FACTORY METHOD DESIGN PATTERN WITH RAII
 // per recommandation : Avoid overuse of new and destroy by making use of smart pointers and RAII principles 
@@ -234,7 +240,7 @@ public:
     }
 };
 
-
+#endif
 
 // int main()
 // {

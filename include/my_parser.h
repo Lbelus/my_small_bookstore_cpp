@@ -7,7 +7,6 @@
 
 #define __SPACE_CHAR__   ' '
 #define MAX_INPUT_TOKENS 250
-// #define DELIMITER        '\n'
 
 #ifdef __cplusplus
 extern "C" {

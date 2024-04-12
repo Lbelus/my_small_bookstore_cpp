@@ -6,6 +6,7 @@
 #include <iostream>
 #include <my_getopt.hpp>
 #include <main_CLI_header.h>
+#include <my_book_factory.hpp>
 #include <my_cmd.hpp>
 
 #endif

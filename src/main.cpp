@@ -2,17 +2,20 @@
 
 int main(int argc, char** argv)
 {
-    int             fd          = STDIN_FILENO;
-    char*           str         = NULL;
-    char**          tokens      = NULL;
+    int    fd     = STDIN_FILENO;
+    char*  str    = NULL;
+    char** tokens = NULL;
+    Library myLibrary;
     init_my_readline();
+    
     while ((str = my_readline(fd)) != NULL)
     {
+        std::cout << ">";
         MyGetOpt* GetOptObj = new MyGetOpt;
         tokens = my_strtok(str , 1, __SPACE_CHAR__);
         std::vector<std::string> vec = GetOptObj->convertToVector(tokens);
         GetOptObj->FlagParser(vec);
-        execute_cmd(*GetOptObj);
+        execute_cmd(*GetOptObj, myLibrary);
         if (GetOptObj->getExit() == true)
         {
             fd = -1;
