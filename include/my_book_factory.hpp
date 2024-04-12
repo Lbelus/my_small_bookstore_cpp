@@ -103,7 +103,6 @@ class BandeDessine : public LibraryItem
 };
 
 // run-time polymorphism
-
 class BookCreator
 {
     public:
@@ -134,7 +133,6 @@ class LivreCreator : public BookCreator
 };
 
 
-
 class Library
 {
 private:
@@ -155,6 +153,23 @@ public:
         {
             item->display();
         }
+    }
+
+    bool removeItem(const std::string title, const std::string author)
+    {
+        bool found = false;
+        int index = 0;
+        for (const auto& item : items)
+        {
+            if (item->getTitle() == title && item->getAuthor() == author)
+            {
+                items.erase(items.begin() + index);
+                return true;
+            }
+            index += 1;
+        }
+        std::cout << "Could Not find entry : " << title << std::endl;
+        return false;
     }
 
     void findBooksByAuthor(const std::string& author) const
@@ -212,6 +227,11 @@ public:
             std::cout << author << std::endl;
         }
     }
+
+    void removeAuthor(const std::string& author)
+    {
+        authors.erase(author);
+    }
 };
 
 
@@ -232,7 +252,6 @@ public:
 //     item2->checkIn();
 
 //     Library myLibrary;
-//     // myLibrary = std::make_unique<Library>();
 //     myLibrary.addItem(std::move(item1));
 //     myLibrary.addItem(std::move(item2));
 //     myLibrary.displayItems();
@@ -240,10 +259,18 @@ public:
 //     myLibrary.findBooksByAuthor("Maupassant");
 //     std::cout << "Finding author by title:" << std::endl;
 //     myLibrary.findAuthorByBookTitle("Lanfeust de Troy");
+
 //     myLibrary.addAuthor("the author");
 //     myLibrary.addAuthor("the other author");
 //     myLibrary.addAuthor("the otter author");
 //     myLibrary.addAuthor("the other otter author");
 //     myLibrary.displayAuthors();
+    
+//     myLibrary.removeItem("Lanfeust de Troy", "Christophe Arleston");
+//     myLibrary.displayItems();
+    
+//     myLibrary.removeAuthor("the other otter author");
+//     myLibrary.displayAuthors();
+    
 //     return 0;
 // }
