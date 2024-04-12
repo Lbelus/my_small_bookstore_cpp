@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory> 
 #include <vector>
+#include <set>
+#include <string>
 
 // FACTORY METHOD DESIGN PATTERN WITH RAII
 // per recommandation : Avoid overuse of new and destroy by making use of smart pointers and RAII principles 
@@ -12,9 +14,11 @@ class LibraryItem
         {
             std::cout << "LibraryItem Created" << std::endl;
         }
-        virtual void CheckOut() = 0;
-        virtual void CheckIn() = 0;
-        virtual void Display() = 0;
+        virtual void checkOut() = 0;
+        virtual void checkIn() = 0;
+        virtual void display() = 0;
+        virtual std::string getTitle() const = 0;
+        virtual std::string getAuthor() const = 0;
         virtual ~LibraryItem()
         {
             std::cout << "LibraryItem destroyed" << std::endl;
@@ -33,17 +37,30 @@ class Livre : public LibraryItem
         {
             std::cout << "Livre Created" << std::endl;
         }
-        void CheckOut() override
+
+        void checkOut() override
         {
-            std::cout << "Livre CheckOut" << std::endl;
+            std::cout << "Livre checkOut" << std::endl;
         }
-        void CheckIn() override
+
+        void checkIn() override
         {
-            std::cout << "Livre CheckIn" << std::endl;
+            std::cout << "Livre checkIn" << std::endl;
         }
-        void Display() override
+
+        void display() override
         {
             std::cout << "Title: " << title << ", Author: " << author << ", Pages: " << pages << std::endl;
+        }
+
+        std::string getTitle() const override
+        {
+            return title;
+        }
+
+        std::string getAuthor() const override
+        {
+            return author;
         }
 };
 
@@ -58,17 +75,30 @@ class BandeDessine : public LibraryItem
         {
             std::cout << "BandeDessine Created" << std::endl;
         }
-        void CheckOut() override
+
+        void checkOut() override
         {
-            std::cout << "BandeDessine CheckOut" << std::endl;
+            std::cout << "BandeDessine checkOut" << std::endl;
         }
-        void CheckIn() override
+
+        void checkIn() override
         {
-            std::cout << "BandeDessine CheckIn" << std::endl;
+            std::cout << "BandeDessine checkIn" << std::endl;
         }
-        void Display() override
+
+        void display() override
         {
             std::cout << "Title: " << title << ", Author: " << author << ", Illustrator: " << illustrator << std::endl;
+        }
+
+        std::string getTitle() const override
+        {
+            return title;
+        }
+        
+        std::string getAuthor() const override
+        {
+            return author;
         }
 };
 
@@ -77,19 +107,19 @@ class BandeDessine : public LibraryItem
 class BookCreator
 {
     public:
-        virtual std::unique_ptr<LibraryItem> FactoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) = 0;
+        virtual std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) = 0;
         virtual ~BookCreator() {}
 
-        std::unique_ptr<LibraryItem> CreateBook(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0)
+        std::unique_ptr<LibraryItem> createBook(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0)
         {
-            std::unique_ptr<LibraryItem> smart_ptr = this->FactoryMethod(title, author, illustrator, pages);
+            std::unique_ptr<LibraryItem> smart_ptr = this->factoryMethod(title, author, illustrator, pages);
             return smart_ptr;
         }
 };
 
 class BandeDessineCreator : public BookCreator
 {
-    std::unique_ptr<LibraryItem> FactoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
+    std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
     {
         return std::make_unique<BandeDessine>(title, author, illustrator);
     }
@@ -97,7 +127,7 @@ class BandeDessineCreator : public BookCreator
 
 class LivreCreator : public BookCreator
 {
-    std::unique_ptr<LibraryItem> FactoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
+    std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
     {
         return std::make_unique<Livre>(title, author, pages);
     }
@@ -109,10 +139,13 @@ class Library
 {
 private:
     std::vector<std::unique_ptr<LibraryItem>> items;
+    std::set<std::string> authors;
 
 public:
     void addItem(std::unique_ptr<LibraryItem> item)
     {
+        const std::string& author = item->getAuthor();
+        addAuthor(author);
         items.emplace_back(std::move(item));
     }
 
@@ -120,34 +153,97 @@ public:
     {
         for (const auto& item : items)
         {
-            item->Display();
+            item->display();
+        }
+    }
+
+    void findBooksByAuthor(const std::string& author) const
+    {
+        bool found = false;
+        for (const auto& item : items)
+        {
+            if (item->getAuthor() == author)
+            {
+                item->display();
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            std::cout << "Author has no books referenced in library: " << author << std::endl;
+        }
+    }
+
+    void findAuthorByBookTitle(const std::string& title) const
+    {
+        bool found = false;
+        for (const auto& item : items)
+        {
+            if (item->getTitle() == title)
+            {
+                std::cout << "Author of \"" << title << "\" is " << item->getAuthor() << std::endl;
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            std::cout << "No author found for the book titled: " << title << std::endl;
+        }
+    }
+
+    bool addAuthor(const std::string& author)
+    {
+        bool result = authors.insert(author).second;
+        if (result)
+        {
+            std::cout << "Author succesfuly added" << std::endl;
+        }
+        else
+        {
+            std::cout << "Author already exist" << std::endl;
+        }
+        return result;
+    }
+
+    void displayAuthors() const
+    {
+        for (const std::string& author : authors)
+        {
+            std::cout << author << std::endl;
         }
     }
 };
 
 
 
+// int main()
+// {
+//     std::unique_ptr<BookCreator> creator;
+//     creator = std::make_unique<BandeDessineCreator>();
+//     std::unique_ptr<LibraryItem> item1 = creator->createBook("Lanfeust de Troy", "Christophe Arleston", "Didier Tarquin,");
 
-int main()
-{
-    std::unique_ptr<BookCreator> creator;
-    creator = std::make_unique<BandeDessineCreator>();
-    std::unique_ptr<LibraryItem> item1 = creator->CreateBook("Lanfeust de Troy", "Christophe Arleston", "Didier Tarquin,");
+//     creator = std::make_unique<LivreCreator>();
+//     std::unique_ptr<LibraryItem> item2 = creator->createBook("Bel-Ami", "Maupassant", "", 267);
 
-    creator = std::make_unique<LivreCreator>();
-    std::unique_ptr<LibraryItem> item2 = creator->CreateBook("Bel-Ami", "Maupassant", "", 267);
+//     item1->checkOut();
+//     item1->checkIn();
 
-    item1->CheckOut();
-    item1->CheckIn();
+//     item2->checkOut();
+//     item2->checkIn();
 
-    item2->CheckOut();
-    item2->CheckIn();
-
-    Library myLibrary;
-    // myLibrary = std::make_unique<Library>();
-    myLibrary.addItem(std::move(item1));
-    myLibrary.addItem(std::move(item2));
-    myLibrary.displayItems();
-
-    return 0;
-}
+//     Library myLibrary;
+//     // myLibrary = std::make_unique<Library>();
+//     myLibrary.addItem(std::move(item1));
+//     myLibrary.addItem(std::move(item2));
+//     myLibrary.displayItems();
+//     std::cout << "Finding title by author:" << std::endl;
+//     myLibrary.findBooksByAuthor("Maupassant");
+//     std::cout << "Finding author by title:" << std::endl;
+//     myLibrary.findAuthorByBookTitle("Lanfeust de Troy");
+//     myLibrary.addAuthor("the author");
+//     myLibrary.addAuthor("the other author");
+//     myLibrary.addAuthor("the otter author");
+//     myLibrary.addAuthor("the other otter author");
+//     myLibrary.displayAuthors();
+//     return 0;
+// }
