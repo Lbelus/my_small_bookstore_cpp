@@ -1,6 +1,6 @@
 #include <iostream>
 #include <memory> 
-
+#include <vector>
 
 // FACTORY METHOD DESIGN PATTERN WITH RAII
 // per recommandation : Avoid overuse of new and destroy by making use of smart pointers and RAII principles 
@@ -14,6 +14,7 @@ class LibraryItem
         }
         virtual void CheckOut() = 0;
         virtual void CheckIn() = 0;
+        virtual void Display() = 0;
         virtual ~LibraryItem()
         {
             std::cout << "LibraryItem destroyed" << std::endl;
@@ -40,6 +41,10 @@ class Livre : public LibraryItem
         {
             std::cout << "Livre CheckIn" << std::endl;
         }
+        void Display() override
+        {
+            std::cout << "Title: " << title << ", Author: " << author << ", Pages: " << pages << std::endl;
+        }
 };
 
 class BandeDessine : public LibraryItem
@@ -60,6 +65,10 @@ class BandeDessine : public LibraryItem
         void CheckIn() override
         {
             std::cout << "BandeDessine CheckIn" << std::endl;
+        }
+        void Display() override
+        {
+            std::cout << "Title: " << title << ", Author: " << author << ", Illustrator: " << illustrator << std::endl;
         }
 };
 
@@ -94,20 +103,51 @@ class LivreCreator : public BookCreator
     }
 };
 
-// int main()
-// {
-//     std::unique_ptr<BookCreator> creator;
-//     creator = std::make_unique<BandeDessineCreator>();
-//     std::unique_ptr<LibraryItem> item1 = creator->CreateBook("Lanfeust de Troy", "Christophe Arleston,", "Didier Tarquin,");
 
-//     creator = std::make_unique<LivreCreator>();
-//     std::unique_ptr<LibraryItem> item2 = creator->CreateBook("Bel-Ami", "Maupassant", "", 267);
 
-//     item1->CheckOut();
-//     item1->CheckIn();
+class Library
+{
+private:
+    std::vector<std::unique_ptr<LibraryItem>> items;
 
-//     item2->CheckOut();
-//     item2->CheckIn();
+public:
+    void addItem(std::unique_ptr<LibraryItem> item)
+    {
+        items.emplace_back(std::move(item));
+    }
 
-//     return 0;
-// }
+    void displayItems() const
+    {
+        for (const auto& item : items)
+        {
+            item->Display();
+        }
+    }
+};
+
+
+
+
+int main()
+{
+    std::unique_ptr<BookCreator> creator;
+    creator = std::make_unique<BandeDessineCreator>();
+    std::unique_ptr<LibraryItem> item1 = creator->CreateBook("Lanfeust de Troy", "Christophe Arleston", "Didier Tarquin,");
+
+    creator = std::make_unique<LivreCreator>();
+    std::unique_ptr<LibraryItem> item2 = creator->CreateBook("Bel-Ami", "Maupassant", "", 267);
+
+    item1->CheckOut();
+    item1->CheckIn();
+
+    item2->CheckOut();
+    item2->CheckIn();
+
+    Library myLibrary;
+    // myLibrary = std::make_unique<Library>();
+    myLibrary.addItem(std::move(item1));
+    myLibrary.addItem(std::move(item2));
+    myLibrary.displayItems();
+
+    return 0;
+}
