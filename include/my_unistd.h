@@ -33,7 +33,7 @@ typedef struct my_getopt_s my_getopt_t;
 #define __DASH_CHAR__           '-'
 
 void    count_str_array(int argc, char** argv, my_getopt_t* getopt_ptr);
-void    dynamic_malloc(int argc, char** argv, my_getopt_t *getopt_ptr);
+void    alloc_str_array(int argc, char** argv, my_getopt_t *getopt_ptr);
 void    free_str_array( my_getopt_t *getopt_ptr);
 void    dynamic_free(int argc, char** argv, my_getopt_t *getopt_ptr);
 void    fill_bool_array(bool* bool_arr, int len);

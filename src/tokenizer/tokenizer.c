@@ -1,7 +1,5 @@
 #include <my_parser.h>
 
-
-
 int find_ch(char* str, char ch)
 {
     int index = 0;
@@ -28,7 +26,7 @@ char** my_strtok(char* str, int start_pos, char ch)
         start = end + 1;
     }
     tokens[index] = start;
-    // index += 1;
-    // tokens[index] = NULL;
+    index += 1;
+    tokens[index] = NULL;
     return tokens;
 }

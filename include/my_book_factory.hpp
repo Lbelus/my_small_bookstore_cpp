@@ -71,10 +71,11 @@ class Livre : public LibraryItem
 
 class BandeDessine : public LibraryItem
 {
-    public:
+    private:
         std::string title;
         std::string author;
-        std::string illustrator;
+        std::string illustrator;    
+    public:
         BandeDessine(const std::string& title, const std::string& author, const std::string& illustrator)
         : title(title), author(author), illustrator(illustrator)
         {
@@ -114,16 +115,20 @@ class BookCreator
         virtual std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) = 0;
         virtual ~BookCreator() {}
 
-        std::unique_ptr<LibraryItem> createBook(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0)
+        std::unique_ptr<LibraryItem> createBook(
+        const std::string& title, 
+        const std::string& author, 
+        const std::string& illustrator = "", 
+        int pages = 0)
         {
             std::unique_ptr<LibraryItem> smart_ptr = this->factoryMethod(title, author, illustrator, pages);
             return smart_ptr;
         }
 };
 
-class BandeDessineCreator : public BookCreator
+class BandeDessineCreator : public BookCreator //should rely on a struct intead but that's enough for a showcase. 
 {
-    std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
+    std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override 
     {
         return std::make_unique<BandeDessine>(title, author, illustrator);
     }

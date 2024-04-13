@@ -1,6 +1,6 @@
 #include <my_unistd.h>
 
-void alloc_str_arr(int argc, char** argv, my_getopt_t *getopt_ptr)
+void alloc_str_array(int argc, char** argv, my_getopt_t *getopt_ptr)
 {
     int index = 1;
     int pos = 0;
