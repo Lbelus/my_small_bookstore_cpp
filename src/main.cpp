@@ -7,10 +7,10 @@ int main(int argc, char** argv)
     char** tokens = NULL;
     Library myLibrary;
     init_my_readline();
-    
+    std::cout << ">" << std::flush;
     while ((str = my_readline(fd)) != NULL)
     {
-        std::cout << ">";
+        
         MyGetOpt* GetOptObj = new MyGetOpt;
         tokens = my_strtok(str , 1, __SPACE_CHAR__);
         std::vector<std::string> vec = GetOptObj->convertToVector(tokens);
@@ -23,6 +23,7 @@ int main(int argc, char** argv)
         delete GetOptObj;
         free(tokens);
         free(str);
+        std::cout << ">" << std::flush;
     }
     return EXIT_SUCCESS;
 }
