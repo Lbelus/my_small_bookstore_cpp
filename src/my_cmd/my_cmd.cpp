@@ -5,7 +5,6 @@ cmd_ptr_t cmd_ptr_map[] = {
     {_LIST_ENTRY_, listEntry},
     {_FIND_ENTRY_, findEntry},
     {_REMOVE_ENTRY_, removeEntry},
-    {_PRINT_SECOND_, print_second},
     {_QUIT_, quit},
     {NULL, nullptr}
 };
@@ -85,12 +84,6 @@ int removeEntry(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
-int print_second(MyGetOpt& GetOptObj,  Library& library)
-{
-    (void)GetOptObj;
-    std::cout << "second" << std::endl;
-    return EXIT_SUCCESS;
-}
 
 int quit(MyGetOpt& GetOptObj,  Library& library)
 {

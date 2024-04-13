@@ -7,7 +7,6 @@
 #define _REMOVE_ENTRY_ "RM"
 #define _LIST_ENTRY_ "LIST"
 #define _FIND_ENTRY_ "FIND"
-#define _PRINT_SECOND_ "PRINT_SECOND"
 #define _QUIT_ "QUIT"
 
 class MyGetOpt;
@@ -27,11 +26,8 @@ int listEntry(MyGetOpt& GetOptObj,  Library& library);
 int findEntry(MyGetOpt& GetOptObj,  Library& library);
 int removeEntry(MyGetOpt& GetOptObj, Library& library);
 
-int print_second(MyGetOpt& GetOptObj, Library& library);
 int quit(MyGetOpt& GetOptObj, Library& library);
 int execute_cmd(MyGetOpt& GetOptObj, Library& library);
-
-
 
 void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator);
 void createLivre(Library& library, const std::string& title, const std::string& author, const std::string& pages);

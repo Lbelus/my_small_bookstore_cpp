@@ -9,7 +9,6 @@
 #include <memory>
 #include <set>
 
-
 // FACTORY METHOD DESIGN PATTERN WITH RAII
 // per recommandation : Avoid overuse of new and destroy by making use of smart pointers and RAII principles 
 
