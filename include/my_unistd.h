@@ -11,7 +11,7 @@ extern "C" {
 
 #ifndef STRUCT_MY_GETOPT
 #define STRUCT_MY_GETOPT
-typedef struct s_my_getopt
+struct my_getopt_s
 {
     int         index;
     int         pos;
@@ -22,7 +22,8 @@ typedef struct s_my_getopt
     int*        file_size; //dummy
     bool*       state;
     bool        exit_status;
-} my_getopt_t;
+};
+typedef struct my_getopt_s my_getopt_t;
 #endif
 
 #define BADCHAR                 (int)'?'
@@ -32,7 +33,7 @@ typedef struct s_my_getopt
 #define __DASH_CHAR__           '-'
 
 void    count_str_array(int argc, char** argv, my_getopt_t* getopt_ptr);
-void    dynamic_malloc(int argc, char** argv, my_getopt_t *getopt_ptr);
+void    alloc_str_array(int argc, char** argv, my_getopt_t *getopt_ptr);
 void    free_str_array( my_getopt_t *getopt_ptr);
 void    dynamic_free(int argc, char** argv, my_getopt_t *getopt_ptr);
 void    fill_bool_array(bool* bool_arr, int len);
@@ -42,7 +43,9 @@ void    free_opt(my_getopt_t* getopt_ptr);
 void    init_getopt(my_getopt_t* getopt_ptr, const char* valid_args);
 int     my_getopt(char** argv, const char* valid_args, my_getopt_t* getopt_ptr);
 void    flag_state(char opt, my_getopt_t *getopt_ptr, char** argv);
+
 #ifdef __cplusplus
 }
 #endif
+
 #endif

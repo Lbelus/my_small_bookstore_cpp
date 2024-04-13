@@ -6,6 +6,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
     int      _my_strlen(const char* str);
     char*    _my_strchr(const char* str, char ch);
     char*    _my_strcpy(void* dest, const void* src);
@@ -18,7 +19,9 @@ extern "C" {
     int      _my_strcasecmp(char *s1, char *s2);
     size_t   _my_read(int fd, void* buf, size_t count);
     size_t   _my_write(int fd, const void* buf, size_t count);
+
 #ifdef __cplusplus
 }
 #endif
+
 #endif

@@ -8,10 +8,12 @@ _my_strcpy:
 
 .loop:
     mov bl, byte [rsi + rax]
+    cmp bl, 0
+    je .done
     mov byte [rdi + rax], bl
-    inc rax ; increment counter
-    cmp byte [rsi + rax], 0 ; check if we hit the null-terminating character
-    jne .loop ; if not, continue loop
+    inc rax
+    jmp .loop
+
+.done:
     mov byte [rdi + rax], 0
-    ; return length
     ret

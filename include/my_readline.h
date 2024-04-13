@@ -10,8 +10,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 extern int READLINE_READ_SIZE;
 extern char* rl_buff;
+
 #define SPACE_CHAR ' '
 //readline.h
 char*   my_readline(int fd);                        // main,

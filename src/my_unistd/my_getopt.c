@@ -2,7 +2,6 @@
 
 int my_getopt(char** argv, const char* valid_args, my_getopt_t* getopt_ptr)
 {   
-    //initialize
     if (getopt_ptr->index == 0)
     {
        getopt_ptr->index  = 1;
