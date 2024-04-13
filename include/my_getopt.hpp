@@ -16,31 +16,11 @@ class MyGetOpt
         my_getopt_t* GetOptPtr;
 
     public:
-    MyGetOpt()
+    MyGetOpt(int argc, char** argv)
     {
-        GetOptPtr = (my_getopt_t*) malloc(sizeof(my_getopt_t));
+        GetOptPtr = (my_getopt_t*)malloc(sizeof(my_getopt_t));
         init_getopt(GetOptPtr, VALID_ARG);
-    }
-
-    void FlagParser(std::vector<std::string> tokens)
-    {
-        int index = 0;
-        int argc = tokens.size();
-        char** argv = new char*[argc];
-        while (index < argc)
-        {
-            argv[index] = new char[tokens[index].length() + 1];
-            strcpy(argv[index], tokens[index].c_str());
-            index += 1;
-        }
         flag_parser(argc, argv, VALID_ARG, GetOptPtr);
-        index = 0;
-        while (index < argc)
-        {
-            delete [] argv[index];
-            index += 1;
-        }
-        delete [] argv;
     }
 
     std::vector<std::string> getOptStrArray()
@@ -69,10 +49,23 @@ class MyGetOpt
         return Flags;
     }
 
+    std::vector<std::string> convertToVector(char** tokens)
+    {
+        std::vector<std::string> vec;
+        size_t index = 1;
+        while (tokens[index] != NULL)
+        {
+            vec.emplace_back(std::string(tokens[index]));
+            index += 1;
+        }
+        return vec;
+    }
+
     void setExit()
     {
         GetOptPtr->exit_status = true;
     }
+
     bool getExit()
     {
         return GetOptPtr->exit_status;
@@ -91,19 +84,6 @@ class MyGetOpt
     int getArgCount()
     {
         return GetOptPtr->nbr_str;
-    }
-
-    std::vector<std::string> convertToVector(char** tokens)
-    {
-        std::vector<std::string> vec;
-        size_t index = 1;
-        vec.emplace_back(std::string("TH RAND"));
-        while (tokens[index] != NULL)
-        {
-            vec.emplace_back(std::string(tokens[index]));
-            index += 1;
-        }
-        return vec;
     }
 
     ~MyGetOpt() 

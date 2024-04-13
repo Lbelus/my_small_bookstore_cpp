@@ -34,7 +34,7 @@ int addEntry(MyGetOpt& GetOptObj,  Library& library)
 }
 
 //helper
-void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator)
+void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator) // maybe use a struct next time.
 {
     std::unique_ptr<BookCreator> creator;
     creator = std::make_unique<BandeDessineCreator>();

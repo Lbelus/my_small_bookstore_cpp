@@ -10,11 +10,9 @@ int main(int argc, char** argv)
     std::cout << ">" << std::flush;
     while ((str = my_readline(fd)) != NULL)
     {
-        
-        MyGetOpt* GetOptObj = new MyGetOpt;
+        int arg_count = count_cmd(str, true);
         tokens = my_strtok(str , 1, __SPACE_CHAR__);
-        std::vector<std::string> vec = GetOptObj->convertToVector(tokens);
-        GetOptObj->FlagParser(vec);
+        MyGetOpt* GetOptObj = new MyGetOpt(arg_count, tokens);
         execute_cmd(*GetOptObj, myLibrary);
         if (GetOptObj->getExit() == true)
         {

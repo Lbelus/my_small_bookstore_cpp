@@ -10,7 +10,7 @@ int flag_parser(int argc, char** argv, const char* valid_args, my_getopt_t* geto
     if (getopt_ptr->nbr_str > 0)
     {
         getopt_ptr->str_arr = (char**)malloc(sizeof(char*) * (getopt_ptr->nbr_str));
-        dynamic_malloc(argc, argv, getopt_ptr);
+        alloc_str_arr(argc, argv, getopt_ptr);
     }
     while (getopt_ptr->index < argc)
     {

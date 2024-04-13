@@ -18,7 +18,7 @@ char** my_strtok(char* str, int start_pos, char ch)
     char* start = str;
     char* end;
     int index = start_pos;
-    int pos = 0;
+    int pos = 1;
     while ((end = _my_strchr(start, ch)) != NULL)
     {
         pos = find_ch(start, ch);
@@ -28,7 +28,7 @@ char** my_strtok(char* str, int start_pos, char ch)
         start = end + 1;
     }
     tokens[index] = start;
-    index += 1;
-    tokens[index] = NULL;
+    // index += 1;
+    // tokens[index] = NULL;
     return tokens;
 }
