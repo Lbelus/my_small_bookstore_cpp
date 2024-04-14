@@ -9,7 +9,7 @@ extern "C" {
 
     int      _my_strlen(const char* str);
     char*    _my_strchr(const char* str, char ch);
-    char*    _my_strcpy(void* dest, const void* src);
+    char*    _my_strcpy(void* dest, void* src);
     char*    _my_strcat(void* dest, const void* src);
     void*    _my_memset(void* dest, char ch, int len);
     void*    _my_memcpy(void* dest, void* src, int len);
