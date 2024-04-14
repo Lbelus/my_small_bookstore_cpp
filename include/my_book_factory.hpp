@@ -130,6 +130,7 @@ class BandeDessineCreator : public BookCreator //should rely on a struct intead 
 {
     std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override 
     {
+        (void)pages;
         return std::make_unique<BandeDessine>(title, author, illustrator);
     }
 };
@@ -138,6 +139,7 @@ class LivreCreator : public BookCreator
 {
     std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
     {
+        (void)illustrator;
         return std::make_unique<Livre>(title, author, pages);
     }
 };
@@ -167,7 +169,6 @@ public:
 
     bool removeItem(const std::string title, const std::string author)
     {
-        bool found = false;
         int index = 0;
         for (const auto& item : items)
         {

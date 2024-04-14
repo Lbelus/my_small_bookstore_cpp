@@ -98,6 +98,7 @@ int removeEntry(MyGetOpt& GetOptObj,  Library& library)
 
 int quit(MyGetOpt& GetOptObj,  Library& library)
 {
+    (void)library;
     GetOptObj.setExit();
     std::cout << "quit cmd: exiting program" << std::endl;
     return EXIT_SUCCESS;
