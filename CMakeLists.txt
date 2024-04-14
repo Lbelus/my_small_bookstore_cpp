@@ -57,7 +57,7 @@ if(ENABLE_GTEST)
     find_package(GTest REQUIRED)
 
     # Add test executable
-    add_executable(th_rand_api_tests tests/th_test.cc)
+    add_executable(th_rand_api_tests tests/th_tests.cc)
     target_link_libraries(th_rand_api_tests PRIVATE GTest::gtest_main thRandCliObj)
 
     include(GoogleTest)

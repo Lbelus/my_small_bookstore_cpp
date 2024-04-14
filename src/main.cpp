@@ -12,7 +12,6 @@ int main(int argc, char** argv)
     {
         int arg_count = 1;
         tokens = my_strtok(str , &arg_count, __SPACE_CHAR__);
-        std::cout << "arg count is:" << arg_count << std::endl; 
         MyGetOpt* GetOptObj = new MyGetOpt(arg_count, tokens);
         execute_cmd(*GetOptObj, myLibrary);
         if (GetOptObj->getExit() == true)

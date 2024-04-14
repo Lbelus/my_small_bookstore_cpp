@@ -36,6 +36,7 @@ class Livre : public LibraryItem
         std::string title;
         std::string author;
         int pages;
+
     public:
         Livre(const std::string& title, const std::string& author, int pages) 
         : title(title), author(author), pages(pages)
@@ -74,7 +75,8 @@ class BandeDessine : public LibraryItem
     private:
         std::string title;
         std::string author;
-        std::string illustrator;    
+        std::string illustrator;
+         
     public:
         BandeDessine(const std::string& title, const std::string& author, const std::string& illustrator)
         : title(title), author(author), illustrator(illustrator)
@@ -115,11 +117,7 @@ class BookCreator
         virtual std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) = 0;
         virtual ~BookCreator() {}
 
-        std::unique_ptr<LibraryItem> createBook(
-        const std::string& title, 
-        const std::string& author, 
-        const std::string& illustrator = "", 
-        int pages = 0)
+        std::unique_ptr<LibraryItem> createBook(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0)
         {
             std::unique_ptr<LibraryItem> smart_ptr = this->factoryMethod(title, author, illustrator, pages);
             return smart_ptr;
@@ -200,6 +198,27 @@ public:
         }
     }
 
+    std::vector<std::string> returnBooksByAuthor(const std::string& author)
+    {
+        bool found = false;
+        std::vector<std::string> bookVector;
+        std::string bookTitle;
+        for (const auto& item : items)
+        {
+            if (item->getAuthor() == author)
+            {
+                bookTitle = item->getTitle();
+                bookVector.emplace_back(bookTitle);
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            std::cout << "Author has no books referenced in library: " << author << std::endl;
+        }
+        return bookVector;
+    }
+
     void findAuthorByBookTitle(const std::string& title) const
     {
         bool found = false;
@@ -215,6 +234,19 @@ public:
         {
             std::cout << "No author found for the book titled: " << title << std::endl;
         }
+    }
+
+    std::string returnAuthorByBookTitle(const std::string& title) const
+    {
+        for (const auto& item : items)
+        {
+            if (item->getTitle() == title)
+            {
+                return item->getAuthor();
+            }
+        }
+        std::cout << "No author found for the book titled: " << title << std::endl;
+        return "";
     }
 
     bool addAuthor(const std::string& author)
@@ -242,46 +274,8 @@ public:
     void removeAuthor(const std::string& author)
     {
         authors.erase(author);
+        std::cout << "Author removed" << std::endl;
     }
 };
 
 #endif
-
-// int main()
-// {
-//     std::unique_ptr<BookCreator> creator;
-//     creator = std::make_unique<BandeDessineCreator>();
-//     std::unique_ptr<LibraryItem> item1 = creator->createBook("Lanfeust de Troy", "Christophe Arleston", "Didier Tarquin,");
-
-//     creator = std::make_unique<LivreCreator>();
-//     std::unique_ptr<LibraryItem> item2 = creator->createBook("Bel-Ami", "Maupassant", "", 267);
-
-//     item1->checkOut();
-//     item1->checkIn();
-
-//     item2->checkOut();
-//     item2->checkIn();
-
-//     Library myLibrary;
-//     myLibrary.addItem(std::move(item1));
-//     myLibrary.addItem(std::move(item2));
-//     myLibrary.displayItems();
-//     std::cout << "Finding title by author:" << std::endl;
-//     myLibrary.findBooksByAuthor("Maupassant");
-//     std::cout << "Finding author by title:" << std::endl;
-//     myLibrary.findAuthorByBookTitle("Lanfeust de Troy");
-
-//     myLibrary.addAuthor("the author");
-//     myLibrary.addAuthor("the other author");
-//     myLibrary.addAuthor("the otter author");
-//     myLibrary.addAuthor("the other otter author");
-//     myLibrary.displayAuthors();
-    
-//     myLibrary.removeItem("Lanfeust de Troy", "Christophe Arleston");
-//     myLibrary.displayItems();
-    
-//     myLibrary.removeAuthor("the other otter author");
-//     myLibrary.displayAuthors();
-    
-//     return 0;
-// }

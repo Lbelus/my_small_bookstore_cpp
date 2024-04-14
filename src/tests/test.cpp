@@ -1,9 +1,13 @@
 #include <main_header.hpp>
 #include <my_tests.hpp>
 
-int test_file01()
+int test_file(const char* filepath)
 {
-    int    fd     = open("../tests/test01.txt", O_RDONLY, 0644);
+    int    fd     = open(filepath, O_RDONLY, 0644);
+    if (fd == -1)
+    {
+        return EXIT_FAILURE;
+    }
     char*  str    = NULL;
     char** tokens = NULL;
     Library myLibrary;
@@ -17,6 +21,7 @@ int test_file01()
         execute_cmd(*GetOptObj, myLibrary);
         if (GetOptObj->getExit() == true)
         {
+            close(fd);
             fd = -1;
         }
         delete GetOptObj;
