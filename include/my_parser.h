@@ -12,8 +12,7 @@
 extern "C" {
 #endif
 
-char**  my_strtok(char* str, int start_pos, char ch);
-int     find_ch(char* str, char ch);
+char**  my_strtok(char* str, int* start_pos, char ch);
 int     count_cmd(char* str, bool is_cli);
 
 #ifdef __cplusplus

@@ -1,0 +1,13 @@
+ADD bd "Lanfeust de Troy" "Christophe Arleston" "Didier Tarquin"
+ADD bd "Astérix le Gaulois" "René Goscinny" "Albert Uderzo"
+ADD livre "Bel-Ami" "Guy de Maupassant" "267"
+ADD auteur "Peyo"
+LIST books
+LIST auteur
+FIND auteur "Lanfeust de Troy"
+FIND books "Guy de Maupassant"
+RM livre "Astérix le Gaulois" "René Goscinny"
+RM auteur "Peyo"
+LIST books
+LIST auteur
+QUIT

@@ -1,10 +1,11 @@
 #include <my_unistd.h>
-
-void alloc_str_array(int argc, char** argv, my_getopt_t *getopt_ptr)
+#include <string.h>
+#include <stdio.h>
+void alloc_str_array(char** argv, my_getopt_t *getopt_ptr)
 {
     int index = 1;
     int pos = 0;
-    while (index < argc)
+    while (pos < getopt_ptr->nbr_str)
     {
         if (argv[index][0] != __DASH_CHAR__)
         {

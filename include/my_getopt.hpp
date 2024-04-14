@@ -2,6 +2,7 @@
 #define MY_CPPGETOPT
 
 #include <my_unistd.h>
+#include <stdlib.h>
 #include <vector>
 #include <string>
 #include <cstring>
@@ -31,7 +32,7 @@ class MyGetOpt
         while (index < sizeArr)
         {
             strArr[index] = std::string(GetOptPtr->str_arr[index]);
-            index +=1;
+            index += 1;
         }
         return strArr;
     }
