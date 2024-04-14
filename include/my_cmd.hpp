@@ -2,12 +2,18 @@
 #define _MY_CMD_FN_PTR_
 
 #include <functional> 
+#include <my_custom_error.hpp>
 
 #define _ADD_ENTRY_ "ADD"
 #define _REMOVE_ENTRY_ "RM"
 #define _LIST_ENTRY_ "LIST"
 #define _FIND_ENTRY_ "FIND"
 #define _QUIT_ "QUIT"
+
+#define _BD_ARG_ "bd"
+#define _LIVRE_ARG_ "livre"
+#define _AUTEUR_ARG_ "auteur"
+#define _BOOKS_ARG_ "books"
 
 class MyGetOpt;
 
