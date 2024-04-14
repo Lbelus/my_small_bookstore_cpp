@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-
+#include <my_tests.hpp>
 // Demonstrate some basic assertions.
 
 TEST(thTest, name)
 {
-    EXPECT_EQ(name_test(), EXIT_SUCCESS);
+    EXPECT_EQ(test_file01(), EXIT_SUCCESS);
 }

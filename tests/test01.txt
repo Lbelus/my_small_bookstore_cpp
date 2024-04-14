@@ -1,0 +1,3 @@
+ADD bd "Lanfeust de Troy" "Christophe Arleston" "Didier Tarquin"
+LIST books
+QUIT
