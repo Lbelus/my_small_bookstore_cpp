@@ -5,7 +5,7 @@ int main(int argc, char** argv)
     int    fd     = STDIN_FILENO;
     char*  str    = NULL;
     char** tokens = NULL;
-    Library myLibrary;
+    std::shared_ptr<Library> myLibrary = std::make_shared<Library>();
     init_my_readline();
     std::cout << ">" << std::flush;
     while ((str = my_readline(fd)) != NULL)

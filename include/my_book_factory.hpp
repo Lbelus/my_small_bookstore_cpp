@@ -12,6 +12,13 @@
 // FACTORY METHOD DESIGN PATTERN WITH RAII
 // per recommandation : Avoid overuse of new and destroy by making use of smart pointers and RAII principles 
 
+
+/*
+    ################ LibraryItem #################
+    # This is an abstract base class for library items.
+    # Defines common interface for library items.
+    # implement methods for derived classes.
+*/
 class LibraryItem
 {
     public:
@@ -30,6 +37,12 @@ class LibraryItem
         }
 };
 
+/*
+    ################ Livre #################
+    # Represents a concrete product in the library.
+    # Implements LibraryItem interface for books
+    # hold various data.
+*/
 class Livre : public LibraryItem
 {
     private:
@@ -70,6 +83,12 @@ class Livre : public LibraryItem
         }
 };
 
+/*
+    ################ BandeDessine #################
+    # Represents a concrete product in the library.
+    # Implements LibraryItem interface for books
+    # hold various data.
+*/
 class BandeDessine : public LibraryItem
 {
     private:
@@ -110,7 +129,12 @@ class BandeDessine : public LibraryItem
         }
 };
 
-// run-time polymorphism
+/*
+    ################ BookCreator #################
+    # Creator class serving as a factory for creating LibraryItem objects.
+    # Provides an interface for creating product and requires derived classes to implement the factoryMethod.
+    # Run-time polymorphism: Uses the Factory Method design pattern to allow instantiation of LibraryItem objects at runtime based on type.
+*/
 class BookCreator
 {
     public:
@@ -124,6 +148,11 @@ class BookCreator
         }
 };
 
+/*
+    ################ Bande Dessine Creator #################
+    # Concrete creator class for creating objects.
+    # Implements the factoryMethod to instantiate concrete product.
+*/
 class BandeDessineCreator : public BookCreator //should rely on a struct intead but that's enough for a showcase. 
 {
     std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override 
@@ -133,6 +162,11 @@ class BandeDessineCreator : public BookCreator //should rely on a struct intead 
     }
 };
 
+/*
+    ################ Livre Creator #################
+    # Concrete creator class for creating objects.
+    # Implements the factoryMethod to instantiate concrete product.
+*/
 class LivreCreator : public BookCreator
 {
     std::unique_ptr<LibraryItem> factoryMethod(const std::string& title, const std::string& author, const std::string& illustrator = "", int pages = 0) override
@@ -142,7 +176,12 @@ class LivreCreator : public BookCreator
     }
 };
 
-
+/*
+    ################ Library #################
+    # Manages a collection of LibraryItem objects.
+    # Provides methods to add items to the library, display all items, and manage authors in the library.
+    # Supports operations to find and remove items by title or author, and displays information about authors.
+*/
 class Library
 {
 private:
@@ -150,6 +189,15 @@ private:
     std::set<std::string> authors;
 
 public:
+
+/*
+    ################ add item #################
+    # Adds a new LibraryItem to the library collection
+    # Updates the author list by checking and possibly adding the new item's author
+    # Utilizes unique_ptr for memory management
+    # @return void
+*/
+
     void addItem(std::unique_ptr<LibraryItem> item)
     {
         const std::string& author = item->getAuthor();
@@ -157,6 +205,12 @@ public:
         items.emplace_back(std::move(item));
     }
 
+/*
+    ################ display items #################
+    # Displays all library items
+    # Each item's display function is called to show its details
+    # @return void
+*/
     void displayItems() const
     {
         for (const auto& item : items)
@@ -164,7 +218,12 @@ public:
             item->display();
         }
     }
-
+/*
+    ################ remove item #################
+    # Removes a library item based on title and author match
+    # Searches the collection, removes the item if found, and reports success
+    # @return bool
+*/
     bool removeItem(const std::string title, const std::string author)
     {
         int index = 0;
@@ -181,6 +240,12 @@ public:
         return false;
     }
 
+/*
+    ################ find Books By Author #################
+    # Searches for and displays all books by a specified author
+    # Reports if no books are found for the author
+    # @return void
+*/
     void findBooksByAuthor(const std::string& author) const
     {
         bool found = false;
@@ -197,7 +262,13 @@ public:
             std::cout << "Author has no books referenced in library: " << author << std::endl;
         }
     }
-
+/*
+    ################ return Books By Author #################
+    # Retrieves all titles of books by a specified author
+    # Stores titles in a vector and returns it
+    # Reports if no books are found for the author
+    # @return std::vector<std::string>
+*/
     std::vector<std::string> returnBooksByAuthor(const std::string& author)
     {
         bool found = false;
@@ -218,7 +289,12 @@ public:
         }
         return bookVector;
     }
-
+/*
+    ################ find Author By Book Title #################
+    # Finds and reports the author of a book by its title
+    # Reports if no author is found for the given title
+    # @return void
+*/
     void findAuthorByBookTitle(const std::string& title) const
     {
         bool found = false;
@@ -236,6 +312,12 @@ public:
         }
     }
 
+/*
+    ################ return Author By Book Title #################
+    # Returns the author of a book given its title
+    # Reports if no author is found for the given title
+    # @return std::string
+*/
     std::string returnAuthorByBookTitle(const std::string& title) const
     {
         for (const auto& item : items)
@@ -249,6 +331,12 @@ public:
         return "";
     }
 
+/*
+    ################ add Author #################
+    # Adds a new author to the set of authors if not already present
+    # Reports success or failure
+    # @return bool
+*/
     bool addAuthor(const std::string& author)
     {
         bool result = authors.insert(author).second;
@@ -263,6 +351,11 @@ public:
         return result;
     }
 
+/*
+    ################ display Authors #################
+    # Displays all authors in the library
+    # @return void
+*/
     void displayAuthors() const
     {
         for (const std::string& author : authors)
@@ -271,6 +364,12 @@ public:
         }
     }
 
+/*
+    ################ remove Author #################
+    # Removes an author from the set of authors
+    # Reports the removal action
+    # @return void
+*/
     void removeAuthor(const std::string& author)
     {
         authors.erase(author);

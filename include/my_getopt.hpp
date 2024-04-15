@@ -10,6 +10,10 @@
 
 #define VALID_ARG "-h"
 
+/*
+    CPP wrapper of a C custom version of Getopt
+    allow to parse flags option as well as strings; 
+*/
 
 class MyGetOpt
 {
