@@ -35,7 +35,7 @@ void checkArgCount(int nb_args, int expected)
     # add concrete product to factory or std::string to vector
     # @return {int}
 */
-int addEntry(MyGetOpt& GetOptObj,  Library& library)
+int addEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     char** args = GetOptObj.getArgs();
     const std::string cmd = args[1];
@@ -52,7 +52,7 @@ int addEntry(MyGetOpt& GetOptObj,  Library& library)
     else if (cmd == _AUTEUR_ARG_)
     {
         checkArgCount(GetOptObj.getArgCount(), 3);
-        library.addAuthor(args[2]);
+        library->addAuthor(args[2]);
     }
     return EXIT_SUCCESS;
 }
@@ -65,12 +65,12 @@ int addEntry(MyGetOpt& GetOptObj,  Library& library)
     # add a new bd() to library
     # @return {int}
 */
-void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator) // maybe use a struct next time.
+void createBd(std::shared_ptr<Library> library, const std::string& title, const std::string& author, const std::string& illustrator) // maybe use a struct next time.
 {
     std::unique_ptr<BookCreator> creator;
     creator = std::make_unique<BandeDessineCreator>();
     std::unique_ptr<LibraryItem> item = creator->createBook(title, author, illustrator);
-    library.addItem(std::move(item));
+    library->addItem(std::move(item));
 }
 
 /*
@@ -81,13 +81,13 @@ void createBd(Library& library, const std::string& title, const std::string& aut
     # add a new Livre() to library
     # @return {int}
 */
-void createLivre(Library& library, const std::string& title, const std::string& author, const std::string& pages)
+void createLivre(std::shared_ptr<Library> library, const std::string& title, const std::string& author, const std::string& pages)
 {
     int pages_int = std::stoi(pages);
     std::unique_ptr<BookCreator> creator;
     creator = std::make_unique<LivreCreator>();
     std::unique_ptr<LibraryItem> item = creator->createBook(title, author, "", pages_int);
-    library.addItem(std::move(item));
+    library->addItem(std::move(item));
 }
 
 /*
@@ -96,18 +96,18 @@ void createLivre(Library& library, const std::string& title, const std::string& 
     # List concrete product from factory or std::string from vector
     # @return {int}
 */
-int listEntry(MyGetOpt& GetOptObj,  Library& library)
+int listEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     checkArgCount(GetOptObj.getArgCount(), 2);
     char** args = GetOptObj.getArgs();
     const std::string cmd = args[1];
     if (cmd == _BOOKS_ARG_)
     {
-        library.displayItems();
+        library->displayItems();
     }
     else if (cmd == _AUTEUR_ARG_)
     {
-        library.displayAuthors();
+        library->displayAuthors();
     }
     return EXIT_SUCCESS;
 }
@@ -118,17 +118,17 @@ int listEntry(MyGetOpt& GetOptObj,  Library& library)
     # find and display concrete product from factory by book or author
     # @return {int}
 */
-int findEntry(MyGetOpt& GetOptObj,  Library& library)
+int findEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     char** args = GetOptObj.getArgs();
     const std::string cmd = args[1];
     if (cmd == _AUTEUR_ARG_)
     {
-        library.findAuthorByBookTitle(args[2]);
+        library->findAuthorByBookTitle(args[2]);
     }
     else if (cmd == _BOOKS_ARG_)
     {
-        library.findBooksByAuthor(args[2]);
+        library->findBooksByAuthor(args[2]);
     }
     return EXIT_SUCCESS;
 }
@@ -141,7 +141,7 @@ int findEntry(MyGetOpt& GetOptObj,  Library& library)
     # remove std::string from vector
     # @return {int}
 */
-int removeEntry(MyGetOpt& GetOptObj,  Library& library)
+int removeEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     char** args = GetOptObj.getArgs();
     checkArgCount(GetOptObj.getArgCount(), 2);
@@ -149,12 +149,12 @@ int removeEntry(MyGetOpt& GetOptObj,  Library& library)
     if (cmd == _BD_ARG_|| cmd == _LIVRE_ARG_)
     {
         checkArgCount(GetOptObj.getArgCount(), 4);
-        library.removeItem(args[2], args[3]);
+        library->removeItem(args[2], args[3]);
     }
     else if (cmd == _AUTEUR_ARG_)
     {
         checkArgCount(GetOptObj.getArgCount(), 3);
-        library.removeAuthor(args[2]);
+        library->removeAuthor(args[2]);
     }
     return EXIT_SUCCESS;
 }
@@ -164,7 +164,7 @@ int removeEntry(MyGetOpt& GetOptObj,  Library& library)
     # match function ptr prototype
     # @return {int}
 */
-int quit(MyGetOpt& GetOptObj,  Library& library)
+int quit(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     (void)library;
     GetOptObj.setExit();
@@ -177,7 +177,7 @@ int quit(MyGetOpt& GetOptObj,  Library& library)
     # Iterate over map until match and execute corresponding function ptr;
     # @return {int}
 */
-int execute_cmd(MyGetOpt& GetOptObj,  Library& library)
+int execute_cmd(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library)
 {
     cmd_ptr_t* cf_ptr = cmd_ptr_map;
     while (cf_ptr->cmd != NULL)

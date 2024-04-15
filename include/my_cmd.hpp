@@ -22,21 +22,21 @@ class MyGetOpt;
 struct cmd_ptr_s
 {
     const char* cmd;
-    std::function<int(MyGetOpt&, Library&)> func_ptr;
+    std::function<int(MyGetOpt&, std::shared_ptr<Library>)> func_ptr;
 };
 typedef struct cmd_ptr_s cmd_ptr_t;
 #endif
 
-int addEntry(MyGetOpt& GetOptObj, Library& library);
-int listEntry(MyGetOpt& GetOptObj,  Library& library);
-int findEntry(MyGetOpt& GetOptObj,  Library& library);
-int removeEntry(MyGetOpt& GetOptObj, Library& library);
+int addEntry(MyGetOpt& GetOptObj, std::shared_ptr<Library> library);
+int listEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library);
+int findEntry(MyGetOpt& GetOptObj,  std::shared_ptr<Library> library);
+int removeEntry(MyGetOpt& GetOptObj, std::shared_ptr<Library> library);
 
-int quit(MyGetOpt& GetOptObj, Library& library);
-int execute_cmd(MyGetOpt& GetOptObj, Library& library);
+int quit(MyGetOpt& GetOptObj, std::shared_ptr<Library> library);
+int execute_cmd(MyGetOpt& GetOptObj, std::shared_ptr<Library> library);
 
-void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator);
-void createLivre(Library& library, const std::string& title, const std::string& author, const std::string& pages);
+void createBd(std::shared_ptr<Library> library, const std::string& title, const std::string& author, const std::string& illustrator);
+void createLivre(std::shared_ptr<Library> library, const std::string& title, const std::string& author, const std::string& pages);
 
 
 #endif

@@ -10,7 +10,7 @@ int test_file(const char* filepath)
     }
     char*  str    = NULL;
     char** tokens = NULL;
-    Library myLibrary;
+    std::shared_ptr<Library> myLibrary = std::make_shared<Library>();
     init_my_readline();
     std::cout << ">" << std::flush;
     while ((str = my_readline(fd)) != NULL)
