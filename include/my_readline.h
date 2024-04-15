@@ -14,6 +14,27 @@ extern "C" {
 extern int READLINE_READ_SIZE;
 extern char* rl_buff;
 
+/*
+readline function following specifics specs. 
+
+- one global variable for the size
+- one global variable for the buffer;
+    read a file line by line. 
+    
+    logic Readline:
+    if '\n' in buffer:
+    {
+        extract 
+        dup from buffer init pos to '\n'
+        move init pos
+        return new line
+    }
+    else
+    {
+        read to size and concat to buffer
+    }
+*/
+
 #define SPACE_CHAR ' '
 //readline.h
 char*   my_readline(int fd);                        // main,
@@ -23,7 +44,6 @@ int     seek_newline(int size);                     // readline
 bool    is_newline(int size);                       // readline,
 void    tmp_buff_reset();                           // readline,
 
-// C readline helper
 #ifdef __cplusplus
 }
 #endif

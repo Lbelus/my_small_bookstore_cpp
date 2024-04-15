@@ -1,14 +1,26 @@
 #include <main_header.hpp>
 
+
+/*
+    ################ cmd ptr map #################
+    # store function ptr and matching keywords
+*/
 cmd_ptr_t cmd_ptr_map[] = {
-    {_ADD_ENTRY_, addEntry},
-    {_LIST_ENTRY_, listEntry},
-    {_FIND_ENTRY_, findEntry},
-    {_REMOVE_ENTRY_, removeEntry},
-    {_QUIT_, quit},
-    {NULL, nullptr}
+    {_ADD_ENTRY_,       addEntry},
+    {_LIST_ENTRY_,      listEntry},
+    {_FIND_ENTRY_,      findEntry},
+    {_REMOVE_ENTRY_,    removeEntry},
+    {_QUIT_,            quit},
+    {NULL,              nullptr}
 };
 
+/*
+    ################ check arg count #################
+    # check arg count
+    # check if arg count stored in getopt struct match
+    # trow a a custom error and write to STDERR if condition is met
+    # @return {int}
+*/
 void checkArgCount(int nb_args, int expected)
 {
     if (nb_args < expected)
@@ -17,6 +29,12 @@ void checkArgCount(int nb_args, int expected)
     }
 }
 
+/*
+    ################ add entry #################
+    # check arg count
+    # add concrete product to factory or std::string to vector
+    # @return {int}
+*/
 int addEntry(MyGetOpt& GetOptObj,  Library& library)
 {
     char** args = GetOptObj.getArgs();
@@ -39,7 +57,14 @@ int addEntry(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
-//helper
+/*
+    ################ create Bd #################
+    # Factory Method Design Pattern
+    # CreateBook() is extended into the subclasses, 
+    # calling the CreateBook() in BookCreator will invoke the FactoryMethod. 
+    # add a new bd() to library
+    # @return {int}
+*/
 void createBd(Library& library, const std::string& title, const std::string& author, const std::string& illustrator) // maybe use a struct next time.
 {
     std::unique_ptr<BookCreator> creator;
@@ -48,6 +73,14 @@ void createBd(Library& library, const std::string& title, const std::string& aut
     library.addItem(std::move(item));
 }
 
+/*
+    ################ create Livre #################
+    # Factory Method Design Pattern
+    # CreateBook() is extended into the subclasses, 
+    # calling the CreateBook() in BookCreator will invoke the FactoryMethod. 
+    # add a new Livre() to library
+    # @return {int}
+*/
 void createLivre(Library& library, const std::string& title, const std::string& author, const std::string& pages)
 {
     int pages_int = std::stoi(pages);
@@ -57,6 +90,12 @@ void createLivre(Library& library, const std::string& title, const std::string& 
     library.addItem(std::move(item));
 }
 
+/*
+    ################ list entry #################
+    # check arg count
+    # List concrete product from factory or std::string from vector
+    # @return {int}
+*/
 int listEntry(MyGetOpt& GetOptObj,  Library& library)
 {
     checkArgCount(GetOptObj.getArgCount(), 2);
@@ -73,6 +112,12 @@ int listEntry(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
+/*
+    ################ find entry #################
+    # check arg count
+    # find and display concrete product from factory by book or author
+    # @return {int}
+*/
 int findEntry(MyGetOpt& GetOptObj,  Library& library)
 {
     char** args = GetOptObj.getArgs();
@@ -88,6 +133,14 @@ int findEntry(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
+/*
+    ################ remove entry #################
+    # check arg count
+    # remove concrete product from factory
+    # or
+    # remove std::string from vector
+    # @return {int}
+*/
 int removeEntry(MyGetOpt& GetOptObj,  Library& library)
 {
     char** args = GetOptObj.getArgs();
@@ -106,6 +159,11 @@ int removeEntry(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
+/*
+    ################ quit #################
+    # match function ptr prototype
+    # @return {int}
+*/
 int quit(MyGetOpt& GetOptObj,  Library& library)
 {
     (void)library;
@@ -114,6 +172,11 @@ int quit(MyGetOpt& GetOptObj,  Library& library)
     return EXIT_SUCCESS;
 }
 
+/*
+    ################ execute_cmd #################
+    # Iterate over map until match and execute corresponding function ptr;
+    # @return {int}
+*/
 int execute_cmd(MyGetOpt& GetOptObj,  Library& library)
 {
     cmd_ptr_t* cf_ptr = cmd_ptr_map;
