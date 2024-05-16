@@ -1,71 +1,69 @@
-# take_home_randstad_01
+# my_small_bookstore_cpp
 ***
 
 ## Task
 
 #### Objectif du test
-Développer une application console en C++ permettant la gestion d’une bibliothèque contenant des livres, des BDs
-et leurs auteurs.
+Develop a CLI in C++ that allows the management of a library containing books, comics, and their authors.
 
 #### Mission
-En saisie dans la console, il sera possible :
-- D’ajouter un livre
-- D’ajouter un auteur
-- De rechercher l’auteur d’un livre donné
-- De rechercher les livres d’un auteur donné
+You will be able to:
+- Add a book
+- Add an autho
+- Search for the author of a given book
+- Search for the books of a given autho
 
 
-Pour se faire il faut privilégier l’usage des notions
-C++ suivantes :
-- Classes et héritage
-- Algorithmes STL
-- Conteneurs STL
+To achieve this, the following C++ concepts should be prioritized: :
+- Classes and inheritance
+- STL algorithms
+- STL containers
 
-#### Livrable
-Seul le code source est à fournir, pas l’exécutable.
+#### Deliverable
+Only the source code needs to be provided, not the executable.
 
 ## Description
 
-Composants du projet :
+Project components :
 
-- CLI : CLi et Tokenizer réalisé à partir d'un mélange de classes C++, de C et d'ASM;
-- Systeme de gestion de la bibliotheque : Repose sur une FACTORY METHOD DESIGN PATTERN suivant les principes RAII;
-- UNITESTS : Créés en utilisant le framework "Google Tests";
-- Compilation : Le projet peut être compilé en utilisant CMake (simple, avec flags, avec unitest) ou Makefile (simple ou avec flags).
+- CLI: Command Line Interface and Tokenizer implemented using a mix of C++ classes, C, and Assembly language;
+- Library Management System: Based on a Factory Method Design Pattern following the RAII (Resource Acquisition Is Initialization) principles;
+- UNITESTS : Created using the "Google Tests" framework;
+- Compilation : The project can be compiled using CMake (simple, with flags, with unit tests) or Makefile (simple or with flags).
 
-La FACTORY METHOD DESIGN PATTERN est une design pattern qui permet à une classe de déléguer l'instanciation des objets à ses sous-classes. Ce modèle implique une classe "créateur" avec une méthode pour créer des objets et des sous-classes "produit" qui spécifient le type d'objets à créer. Il permet au programme de créer des objets sans spécifier la classe exacte de l'objet qui sera créé.
+The Factory Method Design Pattern is a design pattern that allows a class to delegate the instantiation of objects to its subclasses. This pattern involves a "creator" class with a method for creating objects and "product" subclasses that specify the type of objects to be created. It allows the program to create objects without specifying the exact class of the object that will be created.
 
-```
-        ┌───────────────────────────┐                                                              
-        │Produit p = CreerProduit() │                                                              
-        │ p.method()                │                                                              
-        └───────┬───────────────────┘                                                              
+```scss
+        ┌────────────────────────────┐                                                              
+        │ Product p = CreateProduct()│                                                              
+        │ p.method()                 │                                                              
+        └───────┬────────────────────┘                                                              
                 │                                                                                  
                 │      ┌─────────────────────────┐               ┌──────────────────┐              
                 │      │                         │               │                  │              
-                │      │      Createur           │               │   Interface      │              
-                │      ├─────────────────────────┼──────────────►│    Produit       │              
+                │      │       Creator           │               │    Product       │              
+                │      ├─────────────────────────┼──────────────►│    Interface     │              
                 └──────┤ ...                     │               ├──────────────────┤              
                        ├─────────────────────────┤               │  +method()       │              
                        │  +operation()           │               └─────────▲────────┘              
-                       │  +CreerProduit():produit│                         │                       
+                       │  +CreateProduct():product│                        │                       
                        └─────────────▲───────────┘                         │                       
                                      │                           ┌─────────┴─────────┐             
                  ┌───────────────────┴──┐                        │                   │             
                  │                      │                        │                   │             
        ┌─────────┴──────┐       ┌───────┴────────┐        ┌──────┴─────┐      ┌──────┴────┐        
-       │CreateurConcretA│       │CreateurConcretB│        │ Produit    │      │ Produit   │        
-       ├────────────────┤       ├────────────────┤        │  ConcretA  │      │  ConcretB │        
+       │ConcreteCreatorA│       │ConcreteCreatorB│        │ Product    │      │ Product   │        
+       ├────────────────┤       ├────────────────┤        │ ConcreteA  │      │ ConcreteB │        
        │...             │       │...             │        └────────────┘      └───────────┘        
        ├────────────────┤       ├────────────────┤                                                 
-       │+CreerProduit():│       │+CreerProduit():│                                                 
-       │ produit        │       │ produit        │                                                 
+       │+CreateProduct()│       │+CreateProduct()│                                                 
+       │ :product       │       │ :product       │                                                 
        └────────┬───────┘       └────────────────┘                                                 
                 │                                                                                  
-      ┌─────────┴──────────────────┐                                                               
-      │return new ProduitConcretA()│                                                               
-      └────────────────────────────┘                                                               
-                                                                                                   
+      ┌─────────┴───────────────────┐                                                               
+      │return new ConcreteProductA()│                                                               
+      └─────────────────────────────┘                                                               
+
 ```
 
 BNF:
@@ -97,21 +95,21 @@ BNF:
 
 
 ## Setup rapide 
-Depuis le dir ``racine`` du projet.
+From the project ``root`` directory.
 
-Avec Docker, construire et creer l'image:
+With Docker, build and create the image:
 ```bash
-docker build -t img_th_ran .
-docker run -it -v /pathToDir/:/workspace/ --name cont_th_ran img_th_ran /bin/bash
+docker build -t img_bookshop .
+docker run -it -v /pathToDir/:/workspace/ --name cont_bookshop img_bookshop /bin/bash
 ```
 
 
-Compiler et tester le projet avec CMake: 
+Compile and test the project with CMake:
 ```bash
 bash scripts/sc_unitest.sh
 cat build/GoogleTestLog.log
 ```
-ou avec Makefile:
+or with Makefile:
 ```bash
 make
 cat tests/test01.txt | ./thRandCli
@@ -120,7 +118,7 @@ cat tests/test01.txt | ./thRandCli
 
 ## Usage
 
-Saisir les commandes suivantes depuis la CLI
+Enter the following commands from the CLI:
 
 ```md
 ADD bd title author illustrator -> ADD bd "Lanfeust de Troy" "Christophe Arleston" "Didier Tarquin"
@@ -149,7 +147,7 @@ docker build -t img_th_ran .
 
 - Run the container:
 ```bash
-docker run -it -v /pathToDir/:/workspace/ --name cont_th_ran img_th_ran /bin/bash
+docker run -it -v /pathToDir/:/workspace/ --name cont_bookshop img_bookshop /bin/bash
 ```
 
 ### Step 2. Build and run the program
