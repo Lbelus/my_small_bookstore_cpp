@@ -8,16 +8,16 @@ Develop a CLI in C++ that allows the management of a library containing books, c
 
 #### Mission
 You will be able to:
-- Add a book
-- Add an author
-- Search for the author of a given book
-- Search for the books of a given autho
+- Add a book;
+- Add an author;
+- Search for the author of a given book;
+- Search for the books of a given author;
 
 
 To achieve this, the following C++ concepts should be prioritized: :
-- Classes and inheritance
-- STL algorithms
-- STL containers
+- Classes and inheritance;
+- STL algorithms;
+- STL containers;
 
 #### Deliverable
 Only the source code needs to be provided, not the executable.
@@ -29,7 +29,7 @@ Project components :
 - CLI: Command Line Interface and Tokenizer implemented using a mix of C++ classes, C, and Assembly language;
 - Library Management System: Based on a Factory Method Design Pattern following the RAII (Resource Acquisition Is Initialization) principles;
 - UNITESTS : Created using the "Google Tests" framework;
-- Compilation : The project can be compiled using CMake (simple, with flags, with unit tests) or Makefile (simple or with flags).
+- Compilation : The project can be compiled using CMake (simple, with flags, with unit tests) or Makefile (simple or with flags);
 
 The Factory Method Design Pattern is a design pattern that allows a class to delegate the instantiation of objects to its subclasses. This pattern involves a "creator" class with a method for creating objects and "product" subclasses that specify the type of objects to be created. It allows the program to create objects without specifying the exact class of the object that will be created.
 
