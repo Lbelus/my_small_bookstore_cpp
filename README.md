@@ -9,7 +9,7 @@ Develop a CLI in C++ that allows the management of a library containing books, c
 #### Mission
 You will be able to:
 - Add a book
-- Add an autho
+- Add an author
 - Search for the author of a given book
 - Search for the books of a given autho
 
@@ -45,8 +45,8 @@ The Factory Method Design Pattern is a design pattern that allows a class to del
                 │      ├─────────────────────────┼──────────────►│    Interface     │              
                 └──────┤ ...                     │               ├──────────────────┤              
                        ├─────────────────────────┤               │  +method()       │              
-                       │  +operation()           │               └─────────▲────────┘              
-                       │  +CreateProduct():product│                        │                       
+                       │ +operation()            │               └─────────▲────────┘              
+                       │ +CreateProduct():product│                         │                       
                        └─────────────▲───────────┘                         │                       
                                      │                           ┌─────────┴─────────┐             
                  ┌───────────────────┴──┐                        │                   │             
