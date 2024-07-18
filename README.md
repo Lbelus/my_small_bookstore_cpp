@@ -3,10 +3,10 @@
 
 ## Task
 
-#### Objectif du test
+#### Test objectives
 Develop a CLI in C++ that allows the management of a library containing books, comics, and their authors.
 
-#### Mission
+#### Goal
 You will be able to:
 - Add a book;
 - Add an author;
@@ -94,7 +94,7 @@ BNF:
 ```
 
 
-## Setup rapide 
+## Quick Setup 
 From the project ``root`` directory.
 
 With Docker, build and create the image:
@@ -135,7 +135,7 @@ QUIT                            -> QUIT
 
 
 
-## Instruction avec detail:
+## Detailled instruction:
 
 ### Step 1. setup the Environment.
 Using docker, from the ``project root`` dir.
